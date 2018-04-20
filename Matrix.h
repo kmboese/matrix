@@ -12,6 +12,10 @@ public:
 	*/
 	Matrix();
 	void printMatrix();
+	/* Prints a given row of a matrix, 1-indexed */
+	void printRow(int r);
+	/* Prints a given column of a matrix, 1-indexed */
+	void printColumn(int c);
 
 private:
 	std::vector<std::vector<int> > data;
