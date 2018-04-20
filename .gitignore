@@ -1,0 +1,7 @@
+#Executables
+main
+
+
+#Compilation Files
+*.o
+*.d
