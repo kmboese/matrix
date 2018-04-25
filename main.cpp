@@ -12,8 +12,9 @@ const string divider = "______________________________________\n";
 void testDefaultMatrix();
 void testCopyOperator();
 void testOverloadedMatrix(int r, int c, vector<int> d);
-void testAntiDiag();
 void testDiag();
+void testAntiDiag();
+void testAddition();
 
 int main(int argc, char** argv){
 	testDefaultMatrix();
@@ -23,36 +24,20 @@ int main(int argc, char** argv){
 	vector<int> d = {3, 7, 19, 12, 8, 13, 105};
 	testOverloadedMatrix(rows, cols, d);
 	testCopyOperator();
-	testAntiDiag();
 	testDiag();
+	testAntiDiag();
+	testAddition();
 
+	Matrix m{};
+	cout << "Printing matrix by columns:\n";
+	for (int i = 1; i <= m.getNumColumns(); i++) {
+		vector<int> v = m.getColumn(i);
+		for (auto x : v) {
+			cout << x << " ";
+		}
+		cout << endl;
+	}
 
-
-
-
-
-	
-
-
-
-
-	/* 
-	cout << "Generating dynamic 2D array:\n";
-	char lBoundingChar = '[';
-	char rBoundingChar = ']';
-	int rows = 5;
-	int cols = 5;
-	int matSize = rows*cols;
-	int *mat = (int *)malloc(sizeof(int) * matSize); //allocate space for 9 elements
-	for (int i = 0; i < rows; i++) {
-		cout << lBoundingChar;
-		for (int j = 0; j < cols; j++) {
-			*(mat + i*rows + j) = (j+1) + i*rows;
-			cout << setw(4) << *(mat + i*cols + j) << " ";
-		}//end column loop
-		cout << rBoundingChar << endl;
-	}//end row loop
-	*/
 	
 	return 0;
 }
@@ -134,6 +119,28 @@ void testCopyOperator() {
 	assert(src==dest);
 }
 
+void testDiag() {
+	cout << "\nTesting creating diagonal matrixes:\n" << divider;
+	vector<int> v{1,5,10,15,20,25,30,35,40,45};
+
+	Matrix src{3,3,v};
+	Matrix d = src;
+	cout << "\nOriginal Matrix:\n";
+	src.printMatrix();
+
+	//Assign the diagonal
+	d = diag(src);
+
+	//test properties
+	assert(src.isSquare() == d.isSquare());
+	assert(src.getNumRows() == d.getNumRows());
+	assert(src.getNumColumns() == d.getNumColumns());
+	assert(src.getElementCount() == d.getElementCount());
+
+	cout << "\nDiagonal Matrix:\n";
+	d.printMatrix();
+}
+
 void testAntiDiag() {
 	cout << "\nTesting creating antidiagonal matrixes:\n" << divider;
 	vector<int> v{};
@@ -143,7 +150,7 @@ void testAntiDiag() {
 	Matrix src{10, 10, v};
 	Matrix ad = src;
 
-	cout << "\nTesting diag():\n";
+	cout << "\nTesting antidiag():\n";
 	src.printMatrix();
 	cout << "\nPrinting Anti-Diagonal\n";
 	ad = antidiag(src);
@@ -156,4 +163,31 @@ void testAntiDiag() {
 
 	ad.printMatrix();
 }
+
+void testAddition() {
+	cout << "\nTesting matrix addition:\n" << divider;\
+	vector<int> tmp {2,3,5,7,9,11,13,17,19};
+	Matrix a{};
+	Matrix b{3, 3, tmp};
+	Matrix c = a + b;
+
+	cout << "Matrix A:\n";
+	a.printMatrix();
+	cout << "Matrix B:\n";
+	b.printMatrix();
+	cout << "Matrix C (A+B):\n";
+	c.printMatrix();
+
+	//Check element-by-element sums
+	for (int i = 1; i <= c.getNumRows(); i++) {
+		vector<int> aRow = a.getRow(i);
+		vector<int> bRow = b.getRow(i);
+		vector<int> cRow = c.getRow(i);
+		for (int j = 0; j < c.getNumColumns(); j++) {
+			assert(cRow[j] == (aRow[j] + bRow[j]));
+		}
+	}
+}
+
+
 

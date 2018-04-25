@@ -17,16 +17,24 @@ public:
 	 * d: vector of ints for matrix to hold. If the number of elements in d is less than the number of elements in the matrix, fill the rest of the matrix values with zero.
 	 */
 	Matrix(int r, int c, std::vector<int> &d);
-	/* Prints a matrix consisting of the main diagonal (top-left to bottom-right) of the matrix, with the rest of the elements as zero.
-	 * Returns: 0 if the matrix is square, -1 otherwise
+	/* Overloaded constructor:
+	 * r: number of rows
+	 * c: number of columns
+	 * All elements initalized to zero.
 	 */
-	int diag();
+	Matrix(int r, int c);
+
+	friend Matrix diag(Matrix &m);
 	friend Matrix antidiag(Matrix &m);
 
+	/* Returns: a vector containg the given row, 1-indexed */
+	std::vector<int> getRow(int r) const;
+	/* Returns: a vector containing the given column, 1-indexed */
+	std::vector<int> getColumn(int c) const;
 	/* Returns: an int containing the number of rows of a matrix */
 	int getNumRows() const;
 	/* Returns: an int containing the number of columns of a matrix*/
-	int getNumColumns();
+	int getNumColumns() const;
 	/* Returns: an int containing the number of elements in the matrix*/
 	int getElementCount();
 	/* Returns: true if matrix is square, false otherwise */
@@ -47,6 +55,7 @@ public:
 	void operator= (const Matrix &rhs);
 	bool operator== (const Matrix &rhs);
 	bool operator!= (const Matrix &rhs);
+	Matrix operator+ (const Matrix &rhs);
 
 private:
 	std::vector<std::vector<int> > data;
