@@ -8,7 +8,7 @@ public:
 	/* Default constructor: 
 	 * rows: 3
 	 * cols: 3
-	 * values: all elements initialized to 0
+	 * values: all elements initialized to ints 1-9
 	*/
 	Matrix();
 	/* Overloaded constructor: 
@@ -21,16 +21,14 @@ public:
 	 * Returns: 0 if the matrix is square, -1 otherwise
 	 */
 	int diag();
+	friend Matrix antidiag(Matrix &m);
 
-	/* Prints a matrix consisting of the anti-diagonal (bottom-left to 
-	 * top-right) of the matrix, with the rest of the elements as zero.
-	 * Returns: 0 if the matrix is square, -1 otherwise (fails to print diagonal)
-	 */
-	Matrix antidiag(Matrix &m);
 	/* Returns: an int containing the number of rows of a matrix */
-	int getRows() const;
+	int getNumRows() const;
 	/* Returns: an int containing the number of columns of a matrix*/
-	int getColumns();
+	int getNumColumns();
+	/* Returns: an int containing the number of elements in the matrix*/
+	int getElementCount();
 	/* Returns: true if matrix is square, false otherwise */
 	bool isSquare();
 	/* Prints an entire matrix object, surrounded by brackets, 
@@ -45,6 +43,11 @@ public:
 	 */
 	int printColumn(int c);
 
+	/* Overloaded Operators */
+	void operator= (const Matrix &rhs);
+	bool operator== (const Matrix &rhs);
+	bool operator!= (const Matrix &rhs);
+
 private:
 	std::vector<std::vector<int> > data;
 	int rows;
@@ -53,6 +56,15 @@ private:
 	bool square;
 
 };
+
+/* Returns: a matrix consisting of the main diagonal (top-left to
+ * bottom-right) of the matrix, with the rest of the elements as zero.
+ */
+Matrix diag(Matrix &m);
+/* Returns: a matrix consisting of the anti-diagonal (bottom-left to 
+ * top-right) of the matrix, with the rest of the elements as zero.
+ */
+Matrix antidiag(Matrix &m);
 
 //return a given matrix rotated 90 degrees
 int** rot90(int** m, int rows, int cols);

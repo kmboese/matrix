@@ -50,43 +50,16 @@ int Matrix::diag() {
 	return 0;
 }
 
-Matrix Matrix::antidiag(Matrix &m) {
-	std::vector<int> tmp {};
-	//Messy code -- should have copy constructor!!!
-	Matrix antidiag {m.getRows(), m.getColumns(), tmp};
-	//Matrix must be square to print a diagonal
-	if (!square) {
-		perror("Error: cannot print anti-diagonal of non-square matrix\n");
-		return antidiag;
-	}
-
-	int count = cols;
-	for (int i = 1; i <= rows; i++) {
-		for (int j = 1; j <= cols; j++) {
-			//only print diagonal values
-			if (j == count) {
-				//need getRow method
-				//tmp.push_back(m.getRow(i)[j][i-1][j-1];
-				count--;
-			}
-			else {
-				tmp.push_back(0);
-			}
-
-		}
-		data.push_back(tmp);
-		tmp.clear();
-	}
-	return antidiag;
-
-}
-
-int Matrix::getRows() const {
+int Matrix::getNumRows() const {
 	return rows;
 }
 
-int Matrix::getColumns() {
+int Matrix::getNumColumns() {
 	return cols;
+}
+
+int Matrix::getElementCount() {
+	return elemCount;
 }
 
 bool Matrix::isSquare() {
@@ -94,7 +67,6 @@ bool Matrix::isSquare() {
 }
 
 void Matrix::printMatrix() {
-	std::cout << "\nPrinting Matrix:\n";
 	for (int i = 0; i < rows; i++){
 		std::cout << lBoundingChar;
 		for (int j = 0; j < cols; j++){
@@ -130,10 +102,59 @@ int Matrix::printColumn(int c) {
 		std::cout << lBoundingChar;
 		std::cout << std::setw(formatWidth) << data[i][c-1];
 		std::cout << std::setw(formatWidth) << rBoundingChar << std::endl;
-
 	}
 	return 0;
 
+}
+
+void Matrix::operator= (const Matrix &rhs) {
+	data = rhs.data;
+	rows = rhs.rows;
+	cols = rhs.cols;
+	elemCount = rhs.elemCount;
+	square = rhs.square;
+}
+
+bool Matrix::operator== (const Matrix &rhs) {
+	return (data == rhs.data &&
+			rows == rhs.rows &&
+			cols == rhs.cols &&
+			elemCount == rhs.elemCount &&
+			square == rhs.square);
+}
+
+bool Matrix::operator!= (const Matrix &rhs) {
+	return (!(*this == rhs));
+}
+
+/*Non-member functions */
+
+Matrix antidiag(Matrix &m) {
+	//Matrix must be square to print a diagonal
+	if (!(m.isSquare() )) {
+		perror("Error: cannot print anti-diagonal of non-square matrix\n");
+		return m;
+	}
+
+	std::vector<int> tmp {};
+	Matrix antidiag = m;
+	
+
+	int count = antidiag.cols; //keeps track of anti-diagonal values
+	for (int i = 1; i <= antidiag.rows; i++) {
+		for (int j = 1; j <= antidiag.cols; j++) {
+			//only assign antidiagonal values
+			if (j == count) {
+				antidiag.data[i-1][j-1] = m.data[i-1][j-1];
+				count--;
+			}
+			else {
+				antidiag.data[i-1][j-1] = 0;
+			}
+
+		}
+	}
+	return antidiag;
 }
 
 int** rot90(int** m, int rows, int cols){
