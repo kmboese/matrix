@@ -182,7 +182,7 @@ void testAddition() {
 
 void testInsert() {
 	cout << "\nTesting matrix insertion:\n" << divider;
-	Matrix m{};
+	Matrix m{10,10};
 	cout << "Original Matrix:\n";
 	m.printMatrix();
 
