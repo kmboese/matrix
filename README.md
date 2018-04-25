@@ -1,4 +1,4 @@
-# matrix
+# Matrix
 A matrix class in C++.
 
 # Functions:
