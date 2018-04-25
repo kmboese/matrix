@@ -225,10 +225,3 @@ Matrix antidiag(Matrix &m) {
 	}
 	return antidiag;
 }
-
-int** rot90(int** m, int rows, int cols){
-	int** ret{};
-	std::cout << "Hello, world!\n";
-
-	return ret;
-}

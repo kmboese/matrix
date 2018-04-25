@@ -78,7 +78,4 @@ Matrix diag(Matrix &m);
  */
 Matrix antidiag(Matrix &m);
 
-//return a given matrix rotated 90 degrees
-int** rot90(int** m, int rows, int cols);
-
 #endif 
