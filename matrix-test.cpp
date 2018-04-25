@@ -15,6 +15,7 @@ void testOverloadedMatrix(int r, int c, vector<int> d);
 void testDiag();
 void testAntiDiag();
 void testAddition();
+void testInsert();
 
 int main(int argc, char** argv){
 	testDefaultMatrix();
@@ -27,18 +28,8 @@ int main(int argc, char** argv){
 	testDiag();
 	testAntiDiag();
 	testAddition();
+	testInsert();
 
-	Matrix m{};
-	cout << "Printing matrix by columns:\n";
-	for (int i = 1; i <= m.getNumColumns(); i++) {
-		vector<int> v = m.getColumn(i);
-		for (auto x : v) {
-			cout << x << " ";
-		}
-		cout << endl;
-	}
-
-	
 	return 0;
 }
 
@@ -165,7 +156,7 @@ void testAntiDiag() {
 }
 
 void testAddition() {
-	cout << "\nTesting matrix addition:\n" << divider;\
+	cout << "\nTesting matrix addition:\n" << divider;
 	vector<int> tmp {2,3,5,7,9,11,13,17,19};
 	Matrix a{};
 	Matrix b{3, 3, tmp};
@@ -187,6 +178,21 @@ void testAddition() {
 			assert(cRow[j] == (aRow[j] + bRow[j]));
 		}
 	}
+}
+
+void testInsert() {
+	cout << "\nTesting matrix insertion:\n" << divider;
+	Matrix m{};
+	cout << "Original Matrix:\n";
+	m.printMatrix();
+
+	for (int i = 1; i <= m.getNumRows(); i++) {
+		for (int j = 1; j <= m.getNumColumns(); j++) {
+			m.insert(i,j,13);
+		}
+	}
+	cout << "New Matrix\n";
+	m.printMatrix();
 }
 
 

@@ -81,11 +81,19 @@ int Matrix::getNumColumns() const {
 	return cols;
 }
 
-int Matrix::getElementCount() {
+int Matrix::getElementCount() const{
 	return elemCount;
 }
 
-bool Matrix::isSquare() {
+void Matrix::insert(int r, int c, int n) {
+	if ( (r < 1 || r > rows) || (c < 1 || c > cols) ) {
+		perror("Error: invalid row or column given!\n");
+		exit(1);
+	}
+	data[r-1][c-1] = n;
+}
+
+bool Matrix::isSquare() const {
 	return square;
 }
 

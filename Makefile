@@ -1,5 +1,5 @@
-targets	:= main 
-objs	:= main.o Matrix.o
+targets	:= matrix-test
+objs	:= matrix-test.o Matrix.o
 
 CC		:= g++
 CFLAGS	:= -Wall
@@ -20,7 +20,7 @@ deps := $(patsubst %.o,%.d,$(objs))
 DEPFLAGS = -MMD -MF $(@:.o=.d)
 
 #compiling the main executable
-main: $(objs)
+matrix-test: $(objs)
 	@echo "CC $@"
 	$(Q)$(CC) $(CFLAGS) -o $@ $^
 

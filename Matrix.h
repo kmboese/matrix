@@ -11,21 +11,18 @@ public:
 	 * values: all elements initialized to ints 1-9
 	*/
 	Matrix();
-	/* Overloaded constructor: 
-	 * r: number of rows
-	 * c: number of columns
-	 * d: vector of ints for matrix to hold. If the number of elements in d is less than the number of elements in the matrix, fill the rest of the matrix values with zero.
-	 */
-	Matrix(int r, int c, std::vector<int> &d);
 	/* Overloaded constructor:
 	 * r: number of rows
 	 * c: number of columns
 	 * All elements initalized to zero.
 	 */
 	Matrix(int r, int c);
-
-	friend Matrix diag(Matrix &m);
-	friend Matrix antidiag(Matrix &m);
+	/* Overloaded constructor: 
+	 * r: number of rows
+	 * c: number of columns
+	 * d: vector of ints for matrix to hold. If the number of elements in d is less than the number of elements in the matrix, fill the rest of the matrix values with zero.
+	 */
+	Matrix(int r, int c, std::vector<int> &d);
 
 	/* Returns: a vector containg the given row, 1-indexed */
 	std::vector<int> getRow(int r) const;
@@ -36,9 +33,11 @@ public:
 	/* Returns: an int containing the number of columns of a matrix*/
 	int getNumColumns() const;
 	/* Returns: an int containing the number of elements in the matrix*/
-	int getElementCount();
+	int getElementCount() const;
+	/* Inserts an integer in the given row and column position */
+	void insert(int r, int c, int n);
 	/* Returns: true if matrix is square, false otherwise */
-	bool isSquare();
+	bool isSquare() const;
 	/* Prints an entire matrix object, surrounded by brackets, 
 	 * with one row per line
 	 */
@@ -56,6 +55,10 @@ public:
 	bool operator== (const Matrix &rhs);
 	bool operator!= (const Matrix &rhs);
 	Matrix operator+ (const Matrix &rhs);
+
+	/* Friend Methods */
+	friend Matrix diag(Matrix &m);
+	friend Matrix antidiag(Matrix &m);
 
 private:
 	std::vector<std::vector<int> > data;

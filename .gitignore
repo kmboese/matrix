@@ -1,6 +1,6 @@
 #Executables
 main
-
+matrix-test
 
 #Compilation Files
 *.o
