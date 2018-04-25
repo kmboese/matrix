@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <string>
 #include "Matrix.h"
+#include "Matrix.cpp" //necessary for the source to have the template implementation
 
 
 using namespace std;
@@ -11,32 +12,36 @@ const string divider = "______________________________________\n";
 //Create a matrix with a default constructor and test that all methods work properly
 void testDefaultMatrix();
 void testCopyOperator();
-void testOverloadedMatrix(int r, int c, vector<int> d);
+template <class T>
+void testOverloadedMatrix(int r, int c, vector<T> d);
 void testDiag();
 void testAntiDiag();
 void testAddition();
 void testInsert();
 
 int main(int argc, char** argv){
+	Matrix<int> m{};
+	m.print();
 	testDefaultMatrix();
 
 	int rows = 2;
 	int cols = 5;
-	vector<int> d = {3, 7, 19, 12, 8, 13, 105};
+	vector<float> d = {3.3, 7.1, 19.2, 12.3, 8.4, 13.5, 105.9};
 	testOverloadedMatrix(rows, cols, d);
-	testCopyOperator();
-	testDiag();
-	testAntiDiag();
-	testAddition();
-	testInsert();
+	// testCopyOperator();
+	// testDiag();
+	// testAntiDiag();
+	// testAddition();
+	// testInsert();
 
 	return 0;
 }
 
+
 void testDefaultMatrix() {
 	cout << "Testing default matrix:\n" << divider;
-	Matrix data{};
-	data.printMatrix();
+	Matrix<int> data{};
+	data.print();
 
 	//test rows
 	cout << "Printing all rows of default matrix:\n";
@@ -53,6 +58,7 @@ void testDefaultMatrix() {
 		assert(data.printColumn(i) == 0);
 		cout << "\n";
 	}
+	cout << "Testing column bounds:\n";
 	assert(data.printColumn(0) == -1);
 	assert(data.printColumn(data.getNumColumns()+1) == -1);
 
@@ -63,11 +69,12 @@ void testDefaultMatrix() {
 	assert(data.getElementCount() == 9);
 }
 
-void testOverloadedMatrix(int r, int c, vector<int> d) {
+template <class T>
+void testOverloadedMatrix(int r, int c, vector<T> d) {
 	cout << "\nTesting overloaded Matrix:\n" << divider;
-	Matrix data{r, c, d};
+	Matrix<T> data{r, c, d};
 
-	data.printMatrix();
+	data.print();
 
 	//test rows
 	cout << "Printing all rows of default matrix:\n";
@@ -84,11 +91,12 @@ void testOverloadedMatrix(int r, int c, vector<int> d) {
 		assert(data.printColumn(i) == 0);
 		cout << "\n";
 	}
+	cout << "Testing column bounds:\n";
 	assert(data.printColumn(0) == -1);
 	assert(data.printColumn(data.getNumColumns()+1) == -1);
 
 }
-
+/*
 void testCopyOperator() {
 	cout << "\nTesting Matrix copy operator:\n" << divider;
 
@@ -96,16 +104,16 @@ void testCopyOperator() {
 	vector<int> v {1,5,10,12,13, 7};
 	Matrix src {2, 3, v};
 	cout << "Printing original matrix:\n";
-	src.printMatrix();
+	src.print();
 
 	//Copy Matrix and confirm they are the same
 	Matrix dest{};
 	assert (src != dest);
 	cout << "\nPrinting a default matrix:\n";
-	dest.printMatrix();
+	dest.print();
 	dest = src;
 	cout << "\nPrinting copied matrix:\n";
-	dest.printMatrix();
+	dest.print();
 
 	assert(src==dest);
 }
@@ -117,7 +125,7 @@ void testDiag() {
 	Matrix src{3,3,v};
 	Matrix d = src;
 	cout << "\nOriginal Matrix:\n";
-	src.printMatrix();
+	src.print();
 
 	//Assign the diagonal
 	d = diag(src);
@@ -129,7 +137,7 @@ void testDiag() {
 	assert(src.getElementCount() == d.getElementCount());
 
 	cout << "\nDiagonal Matrix:\n";
-	d.printMatrix();
+	d.print();
 }
 
 void testAntiDiag() {
@@ -142,7 +150,7 @@ void testAntiDiag() {
 	Matrix ad = src;
 
 	cout << "\nTesting antidiag():\n";
-	src.printMatrix();
+	src.print();
 	cout << "\nPrinting Anti-Diagonal\n";
 	ad = antidiag(src);
 
@@ -152,7 +160,7 @@ void testAntiDiag() {
 	assert(src.getNumColumns() == ad.getNumColumns());
 	assert(src.getElementCount() == ad.getElementCount());
 
-	ad.printMatrix();
+	ad.print();
 }
 
 void testAddition() {
@@ -163,11 +171,11 @@ void testAddition() {
 	Matrix c = a + b;
 
 	cout << "Matrix A:\n";
-	a.printMatrix();
+	a.print();
 	cout << "Matrix B:\n";
-	b.printMatrix();
+	b.print();
 	cout << "Matrix C (A+B):\n";
-	c.printMatrix();
+	c.print();
 
 	//Check element-by-element sums
 	for (int i = 1; i <= c.getNumRows(); i++) {
@@ -184,7 +192,7 @@ void testInsert() {
 	cout << "\nTesting matrix insertion:\n" << divider;
 	Matrix m{10,10};
 	cout << "Original Matrix:\n";
-	m.printMatrix();
+	m.print();
 
 	for (int i = 1; i <= m.getNumRows(); i++) {
 		for (int j = 1; j <= m.getNumColumns(); j++) {
@@ -192,8 +200,6 @@ void testInsert() {
 		}
 	}
 	cout << "New Matrix\n";
-	m.printMatrix();
+	m.print();
 }
-
-
-
+*/

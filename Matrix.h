@@ -3,6 +3,7 @@
 
 #include <vector>
 
+template <class T>
 class Matrix{
 public:
 	/* Default constructor: 
@@ -22,12 +23,12 @@ public:
 	 * c: number of columns
 	 * d: vector of ints for matrix to hold. If the number of elements in d is less than the number of elements in the matrix, fill the rest of the matrix values with zero.
 	 */
-	Matrix(int r, int c, std::vector<int> &d);
+	Matrix(int r, int c, std::vector<T> &d);
 
 	/* Returns: a vector containg the given row, 1-indexed */
-	std::vector<int> getRow(int r) const;
+	std::vector<T> getRow(int r) const;
 	/* Returns: a vector containing the given column, 1-indexed */
-	std::vector<int> getColumn(int c) const;
+	std::vector<T> getColumn(int c) const;
 	/* Returns: an int containing the number of rows of a matrix */
 	int getNumRows() const;
 	/* Returns: an int containing the number of columns of a matrix*/
@@ -35,13 +36,13 @@ public:
 	/* Returns: an int containing the number of elements in the matrix*/
 	int getElementCount() const;
 	/* Inserts an integer in the given row and column position */
-	void insert(int r, int c, int n);
+	void insert(int r, int c, T n);
 	/* Returns: true if matrix is square, false otherwise */
 	bool isSquare() const;
 	/* Prints an entire matrix object, surrounded by brackets, 
 	 * with one row per line
 	 */
-	void printMatrix();
+	void print();
 	/* Prints a given row of a matrix, 1-indexed 
 	 * Returns: 0 if given row is valid, -1 otherwise.*/
 	int printRow(int r);
@@ -51,17 +52,19 @@ public:
 	int printColumn(int c);
 
 	/* Overloaded Operators */
-	void operator= (const Matrix &rhs);
-	bool operator== (const Matrix &rhs);
-	bool operator!= (const Matrix &rhs);
-	Matrix operator+ (const Matrix &rhs);
+	void operator= (const Matrix<T> &rhs);
+	bool operator== (const Matrix<T> &rhs);
+	bool operator!= (const Matrix<T> &rhs);
+	Matrix<T> operator+ (const Matrix<T> &rhs);
 
-	/* Friend Methods */
-	friend Matrix diag(Matrix &m);
-	friend Matrix antidiag(Matrix &m);
+	/* Static Methods */
+	static Matrix<T> diag(Matrix<T> &m);
+	static Matrix<T> antidiag(Matrix<T> &m);
 
 private:
-	std::vector<std::vector<int> > data;
+	// std::vector<std::vector<int> > data;
+	std::vector<std::vector<T> > data;
+
 	int rows;
 	int cols;
 	int elemCount;
@@ -72,10 +75,12 @@ private:
 /* Returns: a matrix consisting of the main diagonal (top-left to
  * bottom-right) of the matrix, with the rest of the elements as zero.
  */
-Matrix diag(Matrix &m);
+// template <class T>
+// Matrix<T> diag(Matrix<T> &m);
 /* Returns: a matrix consisting of the anti-diagonal (bottom-left to 
  * top-right) of the matrix, with the rest of the elements as zero.
  */
-Matrix antidiag(Matrix &m);
+// template <class T>
+// Matrix<T> antidiag(Matrix<T> &m);
 
 #endif 

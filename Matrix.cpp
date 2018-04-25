@@ -4,15 +4,16 @@
 
 const char lBoundingChar = '[';
 const char rBoundingChar = ']';
-const int formatWidth = 4; //text width for stdout formatting
+const int formatWidth = 1; //text width for stdout formatting
 
-Matrix::Matrix() {
+template <class T>
+Matrix<T>::Matrix() {
 	rows = 3;
 	cols = 3;
 	elemCount = rows*cols;
 	square = true;
 	for (int i = 0; i < rows; i++){
-		std::vector<int> v{};
+		std::vector<T> v{};
 		for (int j = 0; j < cols; j++){
 			v.push_back((j+1) + (i*rows));
 		}
@@ -20,10 +21,11 @@ Matrix::Matrix() {
 	}
 }
 
-Matrix::Matrix(int r, int c, std::vector<int> &d)
+template <class T>
+Matrix<T>::Matrix(int r, int c, std::vector<T> &d)
 	: rows{r}, cols{c}, square{r==c} {
 
-		std::vector<int> tmp{};
+		std::vector<T> tmp{};
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				//check that d is still valid
@@ -42,10 +44,11 @@ Matrix::Matrix(int r, int c, std::vector<int> &d)
 		}
 }
 
-Matrix::Matrix(int r, int c) 
+template <class T>
+Matrix<T>::Matrix(int r, int c) 
 	: rows{r}, cols{c}, elemCount{r*c}, square{r==c} {
 		for (int i = 0; i < rows; i++) {
-			std::vector<int> v{};
+			std::vector<T> v{};
 			for (int j = 0; j < cols; j++) {
 				v.push_back(0);
 			}
@@ -53,7 +56,8 @@ Matrix::Matrix(int r, int c)
 		}
 }
 
-std::vector<int> Matrix::getRow(int r) const {
+template <class T>
+std::vector<T> Matrix<T>::getRow(int r) const {
 	if (r < 1 || r > rows) {
 		perror("Error: row access out of bounds!\n");
 		exit(1);
@@ -61,31 +65,36 @@ std::vector<int> Matrix::getRow(int r) const {
 	return (data[r-1]);
 }
 
-std::vector<int> Matrix::getColumn(int c) const {
+template <class T>
+std::vector<T> Matrix<T>::getColumn(int c) const {
 	if (c < 1 || c > cols) {
 		perror("Error: column access out of bounds!\n");
 		exit(1);
 	}
-	std::vector<int> ret{};
+	std::vector<T> ret{};
 	for (int i = 0; i < rows; i++) {
 		ret.push_back(data[i][c-1]); //access the column elements, row by row
 	}
 	return ret;
 }
 
-int Matrix::getNumRows() const {
+template <class T>
+int Matrix<T>::getNumRows() const {
 	return rows;
 }
 
-int Matrix::getNumColumns() const {
+template <class T>
+int Matrix<T>::getNumColumns() const {
 	return cols;
 }
 
-int Matrix::getElementCount() const{
+template <class T>
+int Matrix<T>::getElementCount() const{
 	return elemCount;
 }
 
-void Matrix::insert(int r, int c, int n) {
+template <class T>
+void Matrix<T>::insert(int r, int c, T n) {
 	if ( (r < 1 || r > rows) || (c < 1 || c > cols) ) {
 		perror("Error: invalid row or column given!\n");
 		exit(1);
@@ -93,28 +102,31 @@ void Matrix::insert(int r, int c, int n) {
 	data[r-1][c-1] = n;
 }
 
-bool Matrix::isSquare() const {
+template <class T>
+bool Matrix<T>::isSquare() const {
 	return square;
 }
 
-void Matrix::printMatrix() {
+template <class T>
+void Matrix<T>::print() {
 	for (int i = 0; i < rows; i++){
 		std::cout << lBoundingChar;
 		for (int j = 0; j < cols; j++){
-			std::cout << std::setw(formatWidth) << data[i][j];
+			std::cout << std::setw(formatWidth) << data[i][j] << " ";
 		}
 		std::cout << std::setw(formatWidth) << rBoundingChar << std::endl;
 	}
 }
 
-int Matrix::printRow(int r) {
+template <class T>
+int Matrix<T>::printRow(int r) {
 	//Check for valid row bounds
 	if ( r > rows || r < 1) {
 		std::cerr << "Error: invalid row number given!\n";
 		return -1;
 	}
 
-	std::vector<int> row = data[r-1];
+	std::vector<T> row = data[r-1];
 	std::cout << lBoundingChar;
 	for (int i = 0; i < cols; i++) {
 		std::cout << std::setw(formatWidth) << row[i];
@@ -123,7 +135,8 @@ int Matrix::printRow(int r) {
 	return 0;
 }
 
-int Matrix::printColumn(int c) {
+template <class T>
+int Matrix<T>::printColumn(int c) {
 	//check for valid column bounds
 	if (c > cols || c < 1) {
 		std::cerr << "Error: invalid column number given!\n";
@@ -135,10 +148,10 @@ int Matrix::printColumn(int c) {
 		std::cout << std::setw(formatWidth) << rBoundingChar << std::endl;
 	}
 	return 0;
-
 }
 
-void Matrix::operator= (const Matrix &rhs) {
+template <class T>
+void Matrix<T>::operator= (const Matrix<T> &rhs) {
 	data = rhs.data;
 	rows = rhs.rows;
 	cols = rhs.cols;
@@ -146,7 +159,8 @@ void Matrix::operator= (const Matrix &rhs) {
 	square = rhs.square;
 }
 
-bool Matrix::operator== (const Matrix &rhs) {
+template <class T>
+bool Matrix<T>::operator== (const Matrix<T> &rhs) {
 	return (data == rhs.data &&
 			rows == rhs.rows &&
 			cols == rhs.cols &&
@@ -154,20 +168,22 @@ bool Matrix::operator== (const Matrix &rhs) {
 			square == rhs.square);
 }
 
-bool Matrix::operator!= (const Matrix &rhs) {
+template <class T>
+bool Matrix<T>::operator!= (const Matrix<T> &rhs) {
 	return (!(*this == rhs));
 }
 
-Matrix Matrix::operator+ (const Matrix &rhs) {
+template <class T>
+Matrix<T> Matrix<T>::operator+ (const Matrix<T> &rhs) {
 	if (! (rows == rhs.rows) && (cols == rhs.cols) ) {
 		perror("Error: Matrix dimensions must be identical to perform addition!\n");
 		exit(1);
 	}
 	//add all elements and return result
-	Matrix m{rhs.rows, rhs.cols}; //the return matrix will have the same dimensions
+	Matrix<T> m{rhs.rows, rhs.cols}; //the return matrix will have the same dimensions
 	for (int i = 1; i <= rhs.rows; i++) {
-		std::vector<int> r1 = this->getRow(i);
-		std::vector<int> r2 = rhs.getRow(i);
+		std::vector<T> r1 = this->getRow(i);
+		std::vector<T> r2 = rhs.getRow(i);
 		//sum the rows together
 		for (unsigned int j = 0; j < r1.size(); j++) {
 			r1[j] += r2[j];
@@ -177,15 +193,16 @@ Matrix Matrix::operator+ (const Matrix &rhs) {
 	return m;
 }
 
-/*Non-member functions */
+/*static functions */
 
-Matrix diag(Matrix &m) {
+template <class T>
+static Matrix<T> diag(Matrix<T> &m) {
 	if (!(m.isSquare())){
 		perror("Error: cannot print diagonal of non-square matrix!\n");
 		return m;
 	}
 
-	Matrix diag = m;
+	Matrix<T> diag = m;
 
 	for (int i = 0; i < diag.rows; i++) {
 		for (int j = 0; j < diag.cols; j++) {
@@ -200,14 +217,15 @@ Matrix diag(Matrix &m) {
 	return diag;
 }
 
-Matrix antidiag(Matrix &m) {
+template <class T>
+static Matrix<T> antidiag(Matrix<T> &m) {
 	//Matrix must be square to print a diagonal
 	if (!(m.isSquare() )) {
 		perror("Error: cannot print anti-diagonal of non-square matrix!\n");
 		return m;
 	}
 
-	Matrix antidiag = m; //size the antidiag matrix to the size of the original
+	Matrix<T> antidiag = m; //size the antidiag matrix to the size of the original
 	int count = antidiag.cols - 1; //keeps track of anti-diagonal values
 
 	for (int i = 0; i < antidiag.rows; i++) {
