@@ -27,4 +27,6 @@ A matrix class in C++.
 	* =
 	* == 	: checks element equality
 	* != 	: checks element inequality
-	* \+ 	: standard matrix addition
+	* \+ 	: matrix addition
+	* \-	: matrix subtraction
+	* *	: matrix multiplication
