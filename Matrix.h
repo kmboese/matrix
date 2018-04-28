@@ -25,6 +25,8 @@ public:
 	 */
 	Matrix(int r, int c, std::vector<T> &d);
 
+	/* Returns: the element at the given row and column */
+	T getElement(int r, int c) const;
 	/* Returns: a vector containg the given row, 1-indexed */
 	std::vector<T> getRow(int r) const;
 	/* Returns: a vector containing the given column, 1-indexed */

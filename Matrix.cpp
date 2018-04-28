@@ -4,7 +4,7 @@
 
 const char lBoundingChar = '[';
 const char rBoundingChar = ']';
-const int formatWidth = 1; //text width for stdout formatting
+const int formatWidth = 4; //text width for stdout formatting
 
 template <class T>
 Matrix<T>::Matrix() {
@@ -55,6 +55,15 @@ Matrix<T>::Matrix(int r, int c)
 			}
 			data.push_back(v);
 		}
+}
+
+template <class T>
+T Matrix<T>::getElement(int r, int c) const {
+	if ( (r < 1 || r > rows) || (c < 1 || c > cols) ) {
+		perror("Error: row or column access out of bounds!\n");
+		exit(1);
+	}
+	return data[r-1][c-1];
 }
 
 template <class T>
@@ -130,7 +139,7 @@ int Matrix<T>::printRow(int r) {
 	std::vector<T> row = data[r-1];
 	std::cout << lBoundingChar;
 	for (int i = 0; i < cols; i++) {
-		std::cout << std::setw(formatWidth) << row[i] << " ";
+		std::cout << std::setw(formatWidth) << row[i];
 	}
 	std::cout << std::setw(formatWidth) << rBoundingChar << std::endl;
 	return 0;
@@ -205,13 +214,13 @@ static Matrix<T> diag(Matrix<T> &m) {
 
 	Matrix<T> diag = m;
 
-	for (int i = 0; i < diag.rows; i++) {
-		for (int j = 0; j < diag.cols; j++) {
+	for (int i = 1; i <= diag.getNumRows(); i++) {
+		for (int j = 1; j <= diag.getNumColumns(); j++) {
 			if (j == i) {
-				diag.data[i][j] = m.data[i][j];
+				diag.insert(i, j, m.getElement(i, j));
 			}
 			else {
-				diag.data[i][j] = 0;
+				diag.insert(i, j, 0);
 			}
 		}
 	}
@@ -227,17 +236,17 @@ static Matrix<T> antidiag(Matrix<T> &m) {
 	}
 
 	Matrix<T> antidiag = m; //size the antidiag matrix to the size of the original
-	int count = antidiag.cols - 1; //keeps track of anti-diagonal values
+	int count = antidiag.getNumColumns(); //keeps track of anti-diagonal values
 
-	for (int i = 0; i < antidiag.rows; i++) {
-		for (int j = 0; j < antidiag.cols; j++) {
+	for (int i = 1; i <= antidiag.getNumRows(); i++) {
+		for (int j = 1; j <= antidiag.getNumColumns(); j++) {
 			//only assign antidiagonal values
 			if (j == count) {
-				antidiag.data[i][j] = m.data[i][j];
+				antidiag.insert(i, j, m.getElement(i,j));
 				count--;
 			}
 			else {
-				antidiag.data[i][j] = 0;
+				antidiag.insert(i, j, 0);
 			}
 
 		}

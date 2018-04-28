@@ -36,10 +36,10 @@ int main(int argc, char** argv){
 	Matrix<string> stringy{2, 3, text};
 	cout << "\nPrinting string matrix: \n";
 	stringy.print();
-	// testDiag();
-	// testAntiDiag();
-	// testAddition();
-	// testInsert();
+	testDiag();
+	testAntiDiag();
+	testAddition();
+	testInsert();
 
 	return 0;
 }
@@ -124,13 +124,13 @@ void testCopyOperator() {
 	assert(src==dest);
 }
 
-/*
+
 void testDiag() {
 	cout << "\nTesting creating diagonal matrixes:\n" << divider;
 	vector<int> v{1,5,10,15,20,25,30,35,40,45};
 
-	Matrix src{3,3,v};
-	Matrix d = src;
+	Matrix<int> src{3,3,v};
+	Matrix<int> d = src;
 	cout << "\nOriginal Matrix:\n";
 	src.print();
 
@@ -150,11 +150,11 @@ void testDiag() {
 void testAntiDiag() {
 	cout << "\nTesting creating antidiagonal matrixes:\n" << divider;
 	vector<int> v{};
-	for (int i = 100; i > 0; i--)
+	for (int i = 1; i <= 100; i++)
 		v.push_back(i);
 
-	Matrix src{10, 10, v};
-	Matrix ad = src;
+	Matrix<int> src{10, 10, v};
+	Matrix<int> ad = src;
 
 	cout << "\nTesting antidiag():\n";
 	src.print();
@@ -173,9 +173,9 @@ void testAntiDiag() {
 void testAddition() {
 	cout << "\nTesting matrix addition:\n" << divider;
 	vector<int> tmp {2,3,5,7,9,11,13,17,19};
-	Matrix a{};
-	Matrix b{3, 3, tmp};
-	Matrix c = a + b;
+	Matrix<int> a{};
+	Matrix<int> b{3, 3, tmp};
+	Matrix<int> c = a + b;
 
 	cout << "Matrix A:\n";
 	a.print();
@@ -197,7 +197,7 @@ void testAddition() {
 
 void testInsert() {
 	cout << "\nTesting matrix insertion:\n" << divider;
-	Matrix m{10,10};
+	Matrix<int> m{10,10};
 	cout << "Original Matrix:\n";
 	m.print();
 
@@ -209,4 +209,3 @@ void testInsert() {
 	cout << "New Matrix\n";
 	m.print();
 }
-*/
