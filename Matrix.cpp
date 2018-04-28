@@ -31,10 +31,9 @@ Matrix<T>::Matrix(int r, int c, std::vector<T> &d)
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				//check that d is still valid
-				//if (count > 0) {
-				if (!d.empty()) {
-					tmp.push_back(d.back());
-					d.pop_back();
+				if (!(it == d.end())) {
+					tmp.push_back(*it);
+					it++;
 				}
 				//if d is not valid, simply insert a zero
 				else {
@@ -131,7 +130,7 @@ int Matrix<T>::printRow(int r) {
 	std::vector<T> row = data[r-1];
 	std::cout << lBoundingChar;
 	for (int i = 0; i < cols; i++) {
-		std::cout << std::setw(formatWidth) << row[i];
+		std::cout << std::setw(formatWidth) << row[i] << " ";
 	}
 	std::cout << std::setw(formatWidth) << rBoundingChar << std::endl;
 	return 0;
