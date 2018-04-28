@@ -44,7 +44,7 @@ int main(int argc, char** argv){
 	testInsert();
 
 	Matrix<int> mult1{};
-	Matrix<int> mult2{};
+	Matrix<int> mult2{4,3};
 	Matrix<int> result = mult1 * mult2;
 	cout << "Printing matrix multiplication (A*B): \n";
 	result.print();

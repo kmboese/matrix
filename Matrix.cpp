@@ -246,7 +246,7 @@ Matrix<T> Matrix<T>::operator* (const Matrix<T> &rhs) {
 			res.push_back(tmp);
 		}
 	}
-		//Matrix A = a x b and Matrix B = c x d, AB = a x d
+	//Matrix A = a x b and Matrix B = c x d, AB = b x c
 	Matrix<T> mult{this->getNumRows(), rhs.getNumColumns(), res};
 	return mult;
 }
