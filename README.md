@@ -29,4 +29,4 @@ A matrix class in C++.
 	* != 	: checks element inequality
 	* \+ 	: matrix addition
 	* \-	: matrix subtraction
-	* *	: matrix multiplication
+	* \*	: matrix multiplication
