@@ -223,7 +223,6 @@ Matrix<T> Matrix<T>::operator- (const Matrix<T> &rhs) {
 	return m;
 }
 
-//TO-DO: needs double loop
 template <class T>
 Matrix<T> Matrix<T>::operator* (const Matrix<T> &rhs) {
 	//For multiplication, (left matrix columns == right matrix row) must be true
@@ -236,14 +235,16 @@ Matrix<T> Matrix<T>::operator* (const Matrix<T> &rhs) {
 	T tmp = 0;
 	//loop through rows
 	for (int i = 1; i <= this->getNumRows(); i++) {
-		std::vector<T> op1 = this->getRow(i);
-		std::vector<T> op2 = rhs.getColumn(i);
-		//loop through row elements
-		tmp = 0;
-		for (int j = 0; j < this->getNumColumns(); j++) {
-			tmp += (op1[j]*op2[j]);
+		for (int j = 1; j <= rhs.getNumColumns(); j++) {
+			std::vector<T> op1 = this->getRow(i);
+			std::vector<T> op2 = rhs.getColumn(j);
+					//loop through row elements
+			tmp = 0;
+			for (int k = 0; k < this->getNumColumns(); k++) {
+				tmp += (op1[k]*op2[k]);
+			}
+			res.push_back(tmp);
 		}
-		res.push_back(tmp);
 	}
 		//Matrix A = a x b and Matrix B = c x d, AB = a x d
 	Matrix<T> mult{this->getNumRows(), rhs.getNumColumns(), res};
