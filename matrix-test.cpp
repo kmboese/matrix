@@ -17,6 +17,7 @@ void testOverloadedMatrix(int r, int c, vector<T> d);
 void testDiag();
 void testAntiDiag();
 void testAddition();
+void testSubtraction();
 void testInsert();
 
 int main(int argc, char** argv){
@@ -39,6 +40,7 @@ int main(int argc, char** argv){
 	testDiag();
 	testAntiDiag();
 	testAddition();
+	testSubtraction();
 	testInsert();
 
 	return 0;
@@ -195,9 +197,34 @@ void testAddition() {
 	}
 }
 
+void testSubtraction() {
+	cout << "\nTesting matrix subtraction:\n" << divider;
+	vector<int> tmp {2,3,5,7,9,11,13,17,19};
+	Matrix<int> a{};
+	Matrix<int> b{3, 3, tmp};
+	Matrix<int> c = a - b;
+
+	cout << "Matrix A:\n";
+	a.print();
+	cout << "Matrix B:\n";
+	b.print();
+	cout << "Matrix C (A-B):\n";
+	c.print();
+
+	//Check element-by-element sums
+	for (int i = 1; i <= c.getNumRows(); i++) {
+		vector<int> aRow = a.getRow(i);
+		vector<int> bRow = b.getRow(i);
+		vector<int> cRow = c.getRow(i);
+		for (int j = 0; j < c.getNumColumns(); j++) {
+			assert(cRow[j] == (aRow[j] - bRow[j]));
+		}
+	}
+}
+
 void testInsert() {
 	cout << "\nTesting matrix insertion:\n" << divider;
-	Matrix<int> m{10,10};
+	Matrix<int> m{4,4};
 	cout << "Original Matrix:\n";
 	m.print();
 

@@ -203,6 +203,26 @@ Matrix<T> Matrix<T>::operator+ (const Matrix<T> &rhs) {
 	return m;
 }
 
+template <class T>
+Matrix<T> Matrix<T>::operator- (const Matrix<T> &rhs) {
+	if (! (rows == rhs.rows) && (cols == rhs.cols) ) {
+		perror("Error: Matrix dimensions must be identical to perform addition!\n");
+		exit(1);
+	}
+	//subtract all elements and return result
+	Matrix<T> m{rhs.rows, rhs.cols}; //the return matrix will have the same dimensions
+	for (int i = 1; i <= rhs.rows; i++) {
+		std::vector<T> r1 = this->getRow(i);
+		std::vector<T> r2 = rhs.getRow(i);
+		//subtract the rows
+		for (unsigned int j = 0; j < r1.size(); j++) {
+			r1[j] -= r2[j];
+		}
+		m.data[i-1] = r1;
+	}
+	return m;
+}
+
 /*static functions */
 
 template <class T>
@@ -213,7 +233,6 @@ static Matrix<T> diag(Matrix<T> &m) {
 	}
 
 	Matrix<T> diag = m;
-
 	for (int i = 1; i <= diag.getNumRows(); i++) {
 		for (int j = 1; j <= diag.getNumColumns(); j++) {
 			if (j == i) {
