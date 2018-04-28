@@ -59,6 +59,7 @@ public:
 	bool operator!= (const Matrix<T> &rhs);
 	Matrix<T> operator+ (const Matrix<T> &rhs);
 	Matrix<T> operator- (const Matrix<T> &rhs);
+	Matrix<T> operator* (const Matrix<T> &rhs);
 
 	/* Static Methods */
 	static Matrix<T> diag(Matrix<T> &m);

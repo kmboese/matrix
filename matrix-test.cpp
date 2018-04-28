@@ -43,6 +43,12 @@ int main(int argc, char** argv){
 	testSubtraction();
 	testInsert();
 
+	Matrix<int> mult1{};
+	Matrix<int> mult2{};
+	Matrix<int> result = mult1 * mult2;
+	cout << "Printing matrix multiplication (A*B): \n";
+	result.print();
+
 	return 0;
 }
 
