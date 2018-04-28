@@ -26,6 +26,8 @@ Matrix<T>::Matrix(int r, int c, std::vector<T> &d)
 	: rows{r}, cols{c}, square{r==c} {
 
 		std::vector<T> tmp{};
+		//typename qualifier needed for iterators
+		typename std::vector<T>::iterator it = d.begin();
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				//check that d is still valid

@@ -28,7 +28,14 @@ int main(int argc, char** argv){
 	int cols = 5;
 	vector<float> d = {3.3, 7.1, 19.2, 12.3, 8.4, 13.5, 105.9};
 	testOverloadedMatrix(rows, cols, d);
-	// testCopyOperator();
+	testCopyOperator();
+
+	//Test string matrix
+	vector<string> text = {"Hello", "there", "ladies", "and", 
+							"gentlemen", "."};
+	Matrix<string> stringy{2, 3, text};
+	cout << "\nPrinting string matrix: \n";
+	stringy.print();
 	// testDiag();
 	// testAntiDiag();
 	// testAddition();
@@ -96,18 +103,17 @@ void testOverloadedMatrix(int r, int c, vector<T> d) {
 	assert(data.printColumn(data.getNumColumns()+1) == -1);
 
 }
-/*
 void testCopyOperator() {
 	cout << "\nTesting Matrix copy operator:\n" << divider;
 
 	//Create source Matrix
-	vector<int> v {1,5,10,12,13, 7};
-	Matrix src {2, 3, v};
+	vector<double> v {1.1,5.7,10.1234,12.56,13.13, 7.9684};
+	Matrix<double> src {2, 3, v};
 	cout << "Printing original matrix:\n";
 	src.print();
 
 	//Copy Matrix and confirm they are the same
-	Matrix dest{};
+	Matrix<double> dest{};
 	assert (src != dest);
 	cout << "\nPrinting a default matrix:\n";
 	dest.print();
@@ -118,6 +124,7 @@ void testCopyOperator() {
 	assert(src==dest);
 }
 
+/*
 void testDiag() {
 	cout << "\nTesting creating diagonal matrixes:\n" << divider;
 	vector<int> v{1,5,10,15,20,25,30,35,40,45};
